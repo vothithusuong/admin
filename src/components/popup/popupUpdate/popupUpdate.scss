@@ -1,0 +1,213 @@
+.modalBackground {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.50);
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
+}
+
+.modalContainerUpdate {
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+    //padding-bottom: 55px;
+    .title {
+        display: inline-block;
+        text-align: left;
+        font-size: 25px;
+        font-weight: bolder;
+    }
+
+    .body {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        font-size: 18px;
+        text-align: left;
+        padding-top: 20px;
+
+        .avatarUser {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 3;
+            display: flex;
+            // background-color: rgba(0, 0, 0, 0.35);
+            align-items: center;
+            justify-content: center;
+
+            &:hover .modify {
+                opacity: 1;
+
+            }
+
+            &:hover .fade {
+                opacity: 1;
+
+            }
+
+            .fade {
+                background-color: rgba(0, 0, 0, 0.35);
+                position: absolute;
+                width: 150px;
+                height: 150px;
+                z-index: 100;
+                border-radius: 50%;
+                opacity: 0;
+                transition: all 0.5s ease;
+            }
+
+            .modify {
+                opacity: 0;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                z-index: 100;
+                position: absolute;
+                background-color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 10px;
+                transition: all 0.5s ease;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #e9f5f5;
+                    transform: scale(1.1);
+                }
+            }
+
+            input[type="file"] {
+                display: none;
+            }
+
+            .buttonImage {
+                color: white;
+                height: 40px;
+                width: 120px;
+                background-color: rgb(109, 109, 109);
+                // position: absolute;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 15px;
+                border-radius: 5px;
+                margin-top: 10px;
+                margin-left: 15px;
+                margin-bottom: 10px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgb(121, 121, 121);
+                }
+            }
+
+            button {
+                color: white;
+                border: none;
+                background-color: rgba(0, 134, 29, 0.8);
+                width: 120px;
+                height: 40px;
+                font-size: 15px;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: rgba(67, 153, 86, 0.8);
+                }
+            }
+        }
+
+        .imageUpdate {
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        // .userInfor{
+        //     justify-content: start;
+        //     align-items: start;
+        //     .fieldInfor {
+        //         display: flex;
+        //         justify-content: start;
+        //         align-items: start;
+        //     }
+        // }
+
+
+    }
+
+    .footer {
+        display: flex;
+        justify-content: right;
+        align-items: end;
+
+        button {
+            width: 100px;
+            height: 40px;
+            // margin: 10px;
+            border: none;
+            color: rgb(255, 255, 255);
+            background-color: rgba(0, 134, 29, 0.8);
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .Loader {
+            width: 100%;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        
+            &::after {
+                content: "";
+                width: 20px;
+                height: 20px;
+                border: 5px solid #fff;
+                border-top-color: rgb(194, 194, 194);
+                border-radius: 50%;
+                animation: loading 0.75s ease infinite;
+            }
+        
+            @keyframes loading {
+                from {
+                    transform: rotate(0turn)
+                }
+        
+                to {
+                    transform: rotate(1turn)
+                }
+            }
+        }
+    }
+}
+
+.titleCloseBtn {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+        background-color: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+    }
+}
+
+#cancelBtn {
+    background-color: rgb(113, 113, 113);
+    margin-right: 10px;
+}
