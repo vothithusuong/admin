@@ -119,7 +119,7 @@ const PopupExportBorrow = ({ setOpenModal, setNoti }) => {
             field: "bookname",
             headerName: "Tên sách",
             headerAlign: "center",
-            width: 200,
+            width: 180,
             renderCell: (params) => {
                 return (
                     <div className="cellWithImg">
@@ -137,7 +137,7 @@ const PopupExportBorrow = ({ setOpenModal, setNoti }) => {
             headerName: "Tình trạng",
             headerAlign: "center",
             align: "center",
-            width: 100,
+            width: 120,
             renderCell: (params) => {
                 switch (params.row.status) {
                     case "Cận hạn":
