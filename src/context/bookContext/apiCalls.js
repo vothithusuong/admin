@@ -36,6 +36,54 @@ export const getallStockBook = async (setNotify) => {
     }
 }
 
+export const getCartInTime = async (data, setNotify) => {
+    try {
+        const res = await axios.post(BACK_END_URL + "/carts/getCartInTime", data,  {
+            headers: {
+                token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+            },
+        });
+        if (res.data.success == true) {
+            setNotify({
+                isOpen: true,
+                message: res.data.msg,
+                type: "success",
+            });
+        }
+        if (res.data.success == false) {
+            setNotify({
+                isOpen: true,
+                message: res.data.msg,
+                type: "error",
+            });
+        }
+        return res
+    } catch (err) {
+        setNotify({
+            isOpen: true,
+            message: "lỗi hệ thống: " + err,
+            type: "error",
+        });
+    }
+}
+
+export const exportCartInTime = async (data, setNotify) => {
+    try {
+        const res = await axios.post(BACK_END_URL + "/carts/exportCartInTime", data,  {
+            headers: {
+                token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+            },
+        });
+        return res;
+    } catch (err) {
+        setNotify({
+            isOpen: true,
+            message: "lỗi hệ thống: " + err,
+            type: "error",
+        });
+    }
+}
+
 export const importFileBook = async (data, setNotify, setOpenModal) => {
     const formData = new FormData();
     formData.append("file", data)

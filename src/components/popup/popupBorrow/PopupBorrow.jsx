@@ -355,7 +355,6 @@ const PopupBorrow = ({ setOpenModal, setNoti, setDataUser, setDataCart }) => {
                             />
                         </FormControl>
                     </div>
-
                     <form>
                         <div className='fieldInfor'>
                             {

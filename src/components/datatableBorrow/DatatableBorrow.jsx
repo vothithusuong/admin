@@ -9,10 +9,9 @@ import Notification from "../../components/alert/Notification";
 import LoadingCircle from "../../components/loadingCircle/LoadingCircle";
 import { getBorrowedBook, getCartAdmin, getReturnedBook, getConfirmBook, getWaittoBorrowBook, getCancelBook } from "../../context/bookContext/apiCalls";
 import PopupBorrow from "../popup/popupBorrow/PopupBorrow";
+import PopupExportBorrow from "../popup/popupExportBorrow/PopupExportBorrow";
 import "./datatableBorrow.scss";
-import { makeStyles } from '@mui/styles'
 import { allColumns, returnColumns, userColumns } from "./tableBorrow";
-import { TextField } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -29,6 +28,7 @@ const DatatableBorrow = () => {
     const [dataCancel, setDataCancel] = useState("")
     const [dataCart, setDataCart] = useState("")
     const [modalBorrow, setModalBorrow] = useState(false);
+    const [modalExport, setModalExport] = useState(false);
     const [createUpdate, setCreateUpdate] = useState(0);
     const [notify, setNotify] = useState({
         isOpen: false,
@@ -127,7 +127,13 @@ const DatatableBorrow = () => {
             <div className="datatableTitle">
                 Danh sách phiên mượn sách
                 <div style={{ display: "flex" }}>
-                    <FormControl size="small" sx={{ marginRight: "10px" }}
+                    <div className="link" onClick={() => {
+                        setModalExport(true)
+                        setCreateUpdate(2)
+                    }}>
+                        Thống kê
+                    </div>
+                    <FormControl size="small" sx={{ marginRight: "10px", marginLeft: "10px" }}
                         variant="outlined"
                         id="outlined-required"
                         onChange={handleSearch}
@@ -290,7 +296,13 @@ const DatatableBorrow = () => {
                         setDataCart={setRecordAll}
                     />}
             </div>
-
+            <div className="modalupdate">
+                {modalExport &&
+                    <PopupExportBorrow
+                        setOpenModal={setModalExport}
+                        setNoti={setNotify}
+                    />}
+            </div>
             <Notification
                 notify={notify}
                 setNotify={setNotify}
