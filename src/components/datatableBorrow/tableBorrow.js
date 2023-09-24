@@ -31,7 +31,7 @@ export const userColumns = [
             );
         }
     },
-    
+
     // {
     //     field: "cartItems",
     //     headerName: "Sách đang mượn",
@@ -96,7 +96,7 @@ export const userColumns = [
                 price = price + parseInt(options.bookId.price, 10)
 
             })
-            price = price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+            price = price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
             return price
         },
     },
@@ -114,75 +114,228 @@ export const userColumns = [
 
 
 export const allColumns = [
+    // {
+    //     field: "index", headerName: "STT", width: 20, align: "center"
+    // },
     {
-        field: "index", headerName: "STT", width: 60, align: "center"
-    },
-    // { field: "_id", headerName: "Mã phiên", width: 100 },
-    {
-        field: "name",
-        headerName: "Người mượn",
-        width: 250,
+        field: "idcard",
+        headerName: "CCCD",
+        headerAlign: "center",
+        width: 80,
         renderCell: (params) => {
             return (
                 <div className="cellWithImg">
-                    <img className="cellImg" src={params.row.userBorrowInfo.image} alt="avatar" />
-                    {params.row.userBorrowInfo.name}
+                    <Tooltip title={params.row.idcard} arrow>
+                        <div>
+                            {params.row.idcard}
+                        </div>
+                    </Tooltip>
                 </div>
             );
         }
     },
     {
-        field: "cartItems.length",
-        headerName: "Số phiên mượn",
-        align: "center",
+        field: "name",
+        headerName: "Người mượn",
+        headerAlign: "center",
+        width: 120,
+        renderCell: (params) => {
+            return (
+                <div className="cellWithImg">
+                    <Tooltip title={params.row.name} arrow>
+                        <div>
+                            {params.row.name}
+                        </div>
+                    </Tooltip>
+                </div>
+            );
+        }
+    },
+    {
+        field: "bookname",
+        headerName: "Tên sách",
+        headerAlign: "center",
         width: 150,
         renderCell: (params) => {
             return (
                 <div className="cellWithImg">
-                    {params.row.cartItems.length}
+                    <Tooltip title={params.row.bookId.name} arrow>
+                        <div>
+                            {params.row.bookId.name}
+                        </div>
+                    </Tooltip>
                 </div>
             );
         }
     },
     {
-        field: "cartItems.bookId",
-        headerName: "Số sách mượn",
+        field: "amount",
+        headerName: "SL",
+        headerAlign: "center",
         align: "center",
-        width: 130,
+        width: 60,
         renderCell: (params) => {
             return (
                 <div className="cellWithImg">
-                    {params.row.cartItems.reduce((pre, cur) => { return pre + cur.amount }, 0)}
+                    {params.row.amount}
                 </div>
             );
         }
     },
     {
-        field: "cartItems.bookId.price",
-        headerName: "Tổng giá tiền",
-        align: 'center',
-        headerAlign: 'center',
-        width: 180,
+        field: "status",
+        headerName: "Tình trạng",
+        headerAlign: "center",
+        align: "center",
+        width: 120,
         renderCell: (params) => {
-            let price = 0
-            params.row.cartItems.map(options => {
-                price = price + (parseInt(options.bookId.price, 10)* options.amount)
-
-            })
-            price = price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
-            return price
-        },
-    },
-    {
-        field: "updatedAt",
-        headerName: "Thời gian cập nhật",
-        width: 180,
-        renderCell: (params) => {
-            return (
-                Moment(params.row.updatedAt).format('HH:mm:ss, DD/MM/YYYY')
-            )
+            switch (params.row.status) {
+                case "Cận hạn":
+                    return (
+                        <Chip
+                            key={params.row.index}
+                            label="Cận hạn"
+                            color="warning"
+                            style={{ marginRight: 5 }}
+                            variant="outlined"
+                        ></Chip>
+                    )
+                case "Quá hạn":
+                    return (
+                        <Chip
+                            key={params.row.index}
+                            label="Quá hạn"
+                            color="error"
+                            style={{ marginRight: 5 }}
+                            variant="outlined"
+                        ></Chip>
+                    )
+                case "Đang mượn":
+                    return (
+                        <Chip
+                            key={params.row.index}
+                            label="Đang mượn"
+                            color="primary"
+                            style={{ marginRight: 5 }}
+                            variant="outlined"
+                        ></Chip>
+                    )
+                case "Chờ lấy":
+                    return (
+                        <Chip
+                            key={params.row.index}
+                            label="Chờ lấy"
+                            color="secondary"
+                            style={{ marginRight: 5 }}
+                            variant="outlined"
+                        ></Chip>
+                    )
+                case "Đã trả":
+                    return (
+                        <Chip
+                            key={params.row.index}
+                            label="Đã trả"
+                            color="success"
+                            style={{ marginRight: 5 }}
+                            variant="outlined"
+                        ></Chip>
+                    )
+                case "Đã hủy":
+                    return (
+                        <Chip
+                            key={params.row.index}
+                            label="Đã hủy"
+                            color="error"
+                            style={{ marginRight: 5 }}
+                            variant="outlined"
+                        ></Chip>
+                    )
+                default:
+                    return (
+                        <Chip
+                            key={params.row.index}
+                            label="Chờ duyệt"
+                            style={{ marginRight: 5 }}
+                            variant="outlined"
+                        ></Chip>
+                    )
+            }
         }
     },
+    {
+        field: "timeConfirm",
+        headerName: "Thời gian duyệt",
+        headerAlign: "center",
+        align: "center",
+        width: 155,
+        renderCell: (params) => {
+            if (params.row.timeConfirm) {
+                return (
+                    Moment(params.row.timeConfirm).format('HH:mm:ss, DD/MM/YYYY')
+                )
+            } else {
+                return (
+                    <div style={{ color: "gray" }}>Chưa cập nhật</div>
+                )
+            }
+        }
+    },
+
+    {
+        field: "timeBorrow",
+        headerName: "Thời gian cho mượn",
+        headerAlign: "center",
+        align: "center",
+        width: 160,
+        renderCell: (params) => {
+            if (params.row.timeBorrow) {
+                return (
+                    Moment(params.row.timeBorrow).format('HH:mm:ss, DD/MM/YYYY')
+                )
+            } else {
+                return (
+                    <div style={{ color: "gray" }}>Chưa cập nhật</div>
+                )
+            }
+        }
+    },
+    {
+        field: "exp",
+        headerName: "Thời gian trả sách",
+        headerAlign: "center",
+        align: "center",
+        width: 160,
+        renderCell: (params) => {
+            if (params.row.exp) {
+                return (
+                    Moment(params.row.exp).format('HH:mm:ss, DD/MM/YYYY')
+                )
+            } else {
+                return (
+                    <div style={{ color: "gray" }}>Chưa cập nhật</div>
+                )
+            }
+        }
+    },
+    {
+        field: "timeReturn",
+        headerName: "Thời gian nhận trả",
+        headerAlign: "center",
+        align: "center",
+        width: 160,
+        renderCell: (params) => {
+            if (params.row.timeReturn) {
+                return (
+                    Moment(params.row.timeReturn).format('HH:mm:ss, DD/MM/YYYY')
+                )
+            } else {
+                return (
+                    <div style={{ color: "gray" }}>Chưa cập nhật</div>
+                )
+            }
+        }
+    },
+
 ];
 
 
@@ -204,7 +357,7 @@ export const returnColumns = [
             );
         }
     },
-    
+
     {
         field: "cartItems",
         headerName: "Sách đã trả",
@@ -237,7 +390,7 @@ export const returnColumns = [
                 price = price + parseInt(options.bookId.price, 10)
 
             })
-            price = price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+            price = price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
             return price
         },
     },

@@ -26,6 +26,7 @@ const PopupExportBorrow = ({ setOpenModal, setNoti }) => {
             { header: "CCCD/ Mã định danh", key: "userId", width: 20 },
             { header: "Họ và Tên", key: "name" , width: 20 },
             { header: "Tên sách", key: "bookname" , width: 20 },
+            { header: "Số lượng", key: "amount" , width: 20 },
             { header: "Thời gian duyệt", key: "timeConfirm" , width: 20 },
             { header: "Người duyệt", key: "teacherConfirm" , width: 20 },
             { header: "Thời gian mượn", key: "timeBorrow" , width: 20 },
@@ -44,6 +45,7 @@ const PopupExportBorrow = ({ setOpenModal, setNoti }) => {
                 userId: dataBorrow.idcard,
                 name: dataBorrow.name,
                 bookname: dataBorrow.bookId.name,
+                amount: dataBorrow.amount,
                 timeConfirm: dataBorrow.timeConfirm ? Moment(dataBorrow.timeConfirm).format('HH:mm:ss, DD/MM/YYYY') : "Chờ cập nhật",
                 teacherConfirm: dataBorrow.teacherConfirm ? dataBorrow.teacherConfirm.name : "Chờ cập nhật",
                 timeBorrow: dataBorrow.timeBorrow ? Moment(dataBorrow.timeBorrow).format('HH:mm:ss, DD/MM/YYYY') : "Chờ cập nhật",
@@ -83,7 +85,7 @@ const PopupExportBorrow = ({ setOpenModal, setNoti }) => {
         },
         {
             field: "idcard",
-            headerName: "Mã định danh",
+            headerName: "CCCD",
             headerAlign: "center",
             width: 80,
             renderCell: (params) => {
@@ -119,13 +121,31 @@ const PopupExportBorrow = ({ setOpenModal, setNoti }) => {
             field: "bookname",
             headerName: "Tên sách",
             headerAlign: "center",
-            width: 180,
+            width: 120,
             renderCell: (params) => {
                 return (
                     <div className="cellWithImg">
                         <Tooltip title={params.row.bookId.name} arrow>
                             <div>
                                 {params.row.bookId.name}
+                            </div>
+                        </Tooltip>
+                    </div>
+                );
+            }
+        },
+        {
+            field: "amount",
+            headerName: "SL",
+            headerAlign: "center",
+            align: "center",
+            width: 60,
+            renderCell: (params) => {
+                return (
+                    <div className="cellWithImg">
+                        <Tooltip title={params.row.amount} arrow>
+                            <div>
+                                {params.row.amount}
                             </div>
                         </Tooltip>
                     </div>

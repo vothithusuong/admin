@@ -46,22 +46,22 @@ const DatatableBorrow = () => {
 
     const handleSearch = (e) => {
         const newAll = dataCart.filter(row => {
-            return row.userBorrowInfo.name.toLowerCase().includes(e.target.value.toLowerCase())
+            return row.name.toLowerCase().includes(e.target.value.toLowerCase())
         })
         const newWaittoConfirm = dataConfirm.filter(row => {
-            return row.userBorrowInfo.name.toLowerCase().includes(e.target.value.toLowerCase())
+            return row.name.toLowerCase().includes(e.target.value.toLowerCase())
         })
         const newWaittoBorrow = dataWaittoBorrow.filter(row => {
-            return row.userBorrowInfo.name.toLowerCase().includes(e.target.value.toLowerCase())
+            return row.name.toLowerCase().includes(e.target.value.toLowerCase())
         })
         const newBorrowed = dataUser.filter(row => {
-            return row.userBorrowInfo.name.toLowerCase().includes(e.target.value.toLowerCase())
+            return row.name.toLowerCase().includes(e.target.value.toLowerCase())
         })
         const newReturn = dataReturn.filter(row => {
-            return row.userBorrowInfo.name.toLowerCase().includes(e.target.value.toLowerCase())
+            return row.name.toLowerCase().includes(e.target.value.toLowerCase())
         })
         const newCancel = dataCancel.filter(row => {
-            return row.userBorrowInfo.name.toLowerCase().includes(e.target.value.toLowerCase())
+            return row.name.toLowerCase().includes(e.target.value.toLowerCase())
         })
         setRecordAll(newAll)
         setRecordWaitConfirm(newWaittoConfirm)
@@ -70,32 +70,42 @@ const DatatableBorrow = () => {
         setRecordDone(newReturn)
         setRecordCancel(newCancel)
     }
-
     useEffect(() => {
         (async () => {
-            const userList = await getBorrowedBook(setNotify)
-            setDataUser(userList?.data?.data.map((item, index) => ({ ...item, index: index + 1 })))
-            setRecordBorrowed(userList?.data?.data.map((item, index) => ({ ...item, index: index + 1 })))
-
-            const confirmList = await getConfirmBook(setNotify)
-            setDataConfirm(confirmList?.data?.data.map((item, index) => ({ ...item, index: index + 1 })))
-            setRecordWaitConfirm(confirmList?.data?.data.map((item, index) => ({ ...item, index: index + 1 })))
-
-            const waittoBorrowList = await getWaittoBorrowBook(setNotify)
-            setDataWaittoBorrow(waittoBorrowList?.data?.data.map((item, index) => ({ ...item, index: index + 1 })))
-            setRecordWaittoBorrow(waittoBorrowList?.data?.data.map((item, index) => ({ ...item, index: index + 1 })))
-
-            const returnList = await getReturnedBook(setNotify)
-            setDataReturn(returnList?.data?.data.map((item, index) => ({ ...item, index: index + 1 })))
-            setRecordDone(returnList?.data?.data.map((item, index) => ({ ...item, index: index + 1 })))
-
             const cartList = await getCartAdmin(setNotify)
             setDataCart(cartList?.data?.data.map((item, index) => ({ ...item, index: index + 1 })))
             setRecordAll(cartList?.data?.data.map((item, index) => ({ ...item, index: index + 1 })))
+            const clonecartList = cartList?.data?.data.map((item, index) => ({ ...item, index: index + 1 }))
+            if (clonecartList) {
+                for (let index = 0; index < clonecartList.length; index++) {
+                    switch (clonecartList[index].status) {
+                        case "Cận hạn":
+                        case "Quá hạn":
+                        case "Đang mượn":
+                            setDataUser(dataUser => [...dataUser, clonecartList[index]])
+                            setRecordBorrowed(dataUser => [...dataUser, clonecartList[index]])
+                            break;
+                        case "Chờ lấy":
+                            setDataWaittoBorrow(dataWaittoBorrow => [...dataWaittoBorrow, clonecartList[index]])
+                            setRecordWaittoBorrow(dataWaittoBorrow => [...dataWaittoBorrow, clonecartList[index]])
+                            break;
+                        case "Đã trả":
+                            setDataReturn(dataReturn => [...dataReturn, clonecartList[index]])
+                            setRecordDone(dataReturn => [...dataReturn, clonecartList[index]])
+                            break;
+                        case "Đã hủy":
+                            setDataCancel(dataCancel => [...dataCancel, clonecartList[index]])
+                            setRecordCancel(dataCancel => [...dataCancel, clonecartList[index]])
+                            break;
+                        default:
+                            setDataConfirm(dataConfirm => [...dataConfirm, clonecartList[index]])
+                            setRecordWaitConfirm(dataConfirm => [...dataConfirm, clonecartList[index]])
+                            break;
+                    }
 
-            const cancelList = await getCancelBook(setNotify)
-            setDataCancel(cancelList?.data?.data.map((item, index) => ({ ...item, index: index + 1 })))
-            setRecordCancel(cancelList?.data?.data.map((item, index) => ({ ...item, index: index + 1 })))
+                }
+
+            }
         })()
         return;
     }, [])
@@ -112,7 +122,7 @@ const DatatableBorrow = () => {
             renderCell: (params) => {
                 return (
                     <div className="cellAction">
-                        <Link to={"/users/" + params.row.userBorrowInfo._id} style={{ textDecoration: "none" }}>
+                        <Link to={"/users/" + params.row.iduser} style={{ textDecoration: "none" }}>
                             <div className="viewButton">Chi tiết</div>
                         </Link>
                     </div>
