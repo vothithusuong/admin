@@ -70,6 +70,7 @@ const DatatableBorrow = () => {
         setRecordDone(newReturn)
         setRecordCancel(newCancel)
     }
+    console.log(dataCart)
     useEffect(() => {
         (async () => {
             const cartList = await getCartAdmin(setNotify)
@@ -173,7 +174,7 @@ const DatatableBorrow = () => {
                 </div>
             </div>
             {
-                dataCart && dataUser && dataReturn && dataConfirm && dataWaittoBorrow && dataCancel ?
+                dataCart ?
                     <TabContext value={valueTab}>
                         <TabList onChange={handleChangeTab} aria-label="lab API tabs example">
                             <Tab label={"Tất cả (" + dataCart.length + ")"} value="1" />
@@ -184,113 +185,85 @@ const DatatableBorrow = () => {
                             <Tab label={"Đã hủy (" + dataCancel.length + ")"} value="6" />
                         </TabList>
                         <TabPanel value={"1"} index={0} sx={{ padding: '0px' }}>
-                            {
-                                recordAll ?
-                                    <DataGrid
-                                        autoHeight={true}
-                                        className="datagrid"
-                                        rows={recordAll}
-                                        columns={allColumns.concat(actionColumn)}
-                                        getRowId={(dataUser) => dataUser._id}
-                                        pageSize={9}
-                                        rowsPerPageOptions={[9]}
-                                        disableSelectionOnClick
-                                        disableColumnMenu
-                                    />
-                                    :
-                                    <LoadingCircle />
-                            }
+
+                            <DataGrid
+                                autoHeight={true}
+                                className="datagrid"
+                                rows={recordAll}
+                                columns={allColumns.concat(actionColumn)}
+                                getRowId={(dataUser) => dataUser._id}
+                                pageSize={9}
+                                rowsPerPageOptions={[9]}
+                                disableSelectionOnClick
+                                disableColumnMenu
+                            />
+
                         </TabPanel>
                         <TabPanel value={"4"} index={0} sx={{ padding: '0px' }}>
-                            {
-                                recordWaitConfirm ?
-                                    <DataGrid
-                                        autoHeight={true}
-                                        className="datagrid"
-                                        rows={recordWaitConfirm}
-                                        columns={allColumns.concat(actionColumn)}
-                                        getRowId={(dataConfirm) => dataConfirm._id}
-                                        pageSize={9}
-                                        rowsPerPageOptions={[9]}
-                                        disableSelectionOnClick
-                                        disableColumnMenu
-                                    />
-                                    :
-                                    <LoadingCircle />
-                            }
+                            <DataGrid
+                                autoHeight={true}
+                                className="datagrid"
+                                rows={recordWaitConfirm}
+                                columns={allColumns.concat(actionColumn)}
+                                getRowId={(dataConfirm) => dataConfirm._id}
+                                pageSize={9}
+                                rowsPerPageOptions={[9]}
+                                disableSelectionOnClick
+                                disableColumnMenu
+                            />
                         </TabPanel>
                         <TabPanel value={"5"} index={0} sx={{ padding: '0px' }}>
-                            {
-                                recordWaittoBorrow ?
-                                    <DataGrid
-                                        autoHeight={true}
-                                        className="datagrid"
-                                        rows={recordWaittoBorrow}
-                                        columns={allColumns.concat(actionColumn)}
-                                        getRowId={(dataWaittoBorrow) => dataWaittoBorrow._id}
-                                        pageSize={9}
-                                        rowsPerPageOptions={[9]}
-                                        disableSelectionOnClick
-                                        disableColumnMenu
-                                    />
-                                    :
-                                    <LoadingCircle />
-                            }
+                            <DataGrid
+                                autoHeight={true}
+                                className="datagrid"
+                                rows={recordWaittoBorrow}
+                                columns={allColumns.concat(actionColumn)}
+                                getRowId={(dataWaittoBorrow) => dataWaittoBorrow._id}
+                                pageSize={9}
+                                rowsPerPageOptions={[9]}
+                                disableSelectionOnClick
+                                disableColumnMenu
+                            />
                         </TabPanel>
                         <TabPanel value={"2"} index={1} sx={{ padding: '0px' }}>
-                            {
-                                recordBorrowed ?
-                                    <DataGrid
-                                        autoHeight={true}
-                                        className="datagrid"
-                                        rows={recordBorrowed}
-                                        columns={allColumns.concat(actionColumn)}
-                                        getRowId={(dataUser) => dataUser._id}
-                                        pageSize={9}
-                                        rowsPerPageOptions={[9]}
-                                        disableSelectionOnClick
-                                        disableColumnMenu
+                            <DataGrid
+                                autoHeight={true}
+                                className="datagrid"
+                                rows={recordBorrowed}
+                                columns={allColumns.concat(actionColumn)}
+                                getRowId={(dataUser) => dataUser._id}
+                                pageSize={9}
+                                rowsPerPageOptions={[9]}
+                                disableSelectionOnClick
+                                disableColumnMenu
 
-                                    />
-                                    :
-                                    <LoadingCircle />
-                            }
+                            />
                         </TabPanel>
                         <TabPanel value={"3"} index={2} sx={{ padding: '0px' }}>
-                            {
-                                recordDone ?
-                                    <DataGrid
-                                        autoHeight={true}
-                                        className="datagrid"
-                                        rows={recordDone}
-                                        columns={allColumns.concat(actionColumn)}
-                                        getRowId={(dataUser) => dataUser._id}
-                                        pageSize={9}
-                                        rowsPerPageOptions={[9]}
-                                        disableSelectionOnClick
-                                        disableColumnMenu
-                                    />
-                                    :
-                                    <LoadingCircle />
-                            }
+                            <DataGrid
+                                autoHeight={true}
+                                className="datagrid"
+                                rows={recordDone}
+                                columns={allColumns.concat(actionColumn)}
+                                getRowId={(dataUser) => dataUser._id}
+                                pageSize={9}
+                                rowsPerPageOptions={[9]}
+                                disableSelectionOnClick
+                                disableColumnMenu
+                            />
                         </TabPanel>
                         <TabPanel value={"6"} index={2} sx={{ padding: '0px' }}>
-                            {
-                                recordCancel ?
-                                    <DataGrid
-                                        autoHeight={true}
-                                        className="datagrid"
-                                        rows={recordCancel}
-                                        columns={allColumns.concat(actionColumn)}
-                                        getRowId={(dataUser) => dataUser._id}
-                                        pageSize={9}
-                                        rowsPerPageOptions={[9]}
-                                        disableSelectionOnClick
-                                        disableColumnMenu
-                                    />
-                                    :
-                                    <LoadingCircle />
-                            }
+                            <DataGrid
+                                autoHeight={true}
+                                className="datagrid"
+                                rows={recordCancel}
+                                columns={allColumns.concat(actionColumn)}
+                                getRowId={(dataUser) => dataUser._id}
+                                pageSize={9}
+                                rowsPerPageOptions={[9]}
+                                disableSelectionOnClick
+                                disableColumnMenu
+                            />
                         </TabPanel>
                     </TabContext>
                     :
