@@ -307,7 +307,7 @@ const PopupBorrow = ({ setOpenModal, setNoti, setDataUser, setDataCart }) => {
             align: "center"
         },
     ];
-
+    console.log(user)
     return (
         <div className="modalBackgroundd">
             <div className="modalContainer">
@@ -320,11 +320,12 @@ const PopupBorrow = ({ setOpenModal, setNoti, setDataUser, setDataCart }) => {
                         {
                             user ?
                                 <Autocomplete
-                                    key={user._id}
+                                    key={user[0]._id}
                                     disablePortal
-                                    id={user._id}
+                                    id={user[0]._id}
                                     options={user}
                                     sx={{ width: 300 }}
+                                    getOptionLabel={(option) => option.name}
                                     onChange={handleChangeAutoComplete}
                                     renderInput={(params) => <TextField {...params} label="Giáo viên" />}
                                 />

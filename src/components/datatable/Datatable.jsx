@@ -49,7 +49,7 @@ const Datatable = () => {
 
   const handleSearch = (e) => {
     const newData = dataUser.filter(row => {
-      return row.name.toLowerCase().includes(e.target.value.toLowerCase())
+      return row?.name?.toLowerCase().includes(e.target.value.toLowerCase())
     })
     setRecord(newData)
   }
